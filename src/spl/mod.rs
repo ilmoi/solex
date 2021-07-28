@@ -1,13 +1,13 @@
 use std::str::FromStr;
 
 use solana_client::rpc_client::RpcClient;
-use solana_sdk::pubkey::Pubkey;
-use solana_sdk::signer::keypair::Keypair;
-use solana_sdk::signer::Signer;
-use solana_sdk::transaction::Transaction;
+use solana_sdk::{
+    pubkey::Pubkey,
+    signer::{keypair::Keypair, Signer},
+    transaction::Transaction,
+};
 use spl_associated_token_account::get_associated_token_address;
-use spl_token::instruction::transfer_checked;
-use spl_token::solana_program::program_pack::Pack;
+use spl_token::{instruction::transfer_checked, solana_program::program_pack::Pack};
 
 pub fn get_token_mint_accounts() -> Vec<Pubkey> {
     vec![Pubkey::from_str("CepEnf1tjkjh7gdHf89uyXUqm5mPQb2ihfv4ygYjgPyF").unwrap()]

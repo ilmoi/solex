@@ -1,19 +1,18 @@
-use std::collections::HashMap;
-use std::ops::Deref;
-use std::str::FromStr;
-use std::sync::Arc;
-use std::thread;
+use std::{ops::Deref, str::FromStr, sync::Arc, thread};
 
 use actix_web::{get, post, web, HttpResponse, Responder};
-use solana_sdk::pubkey::Pubkey;
-use solana_sdk::signer::keypair::{read_keypair_file, Keypair};
-use solana_sdk::signer::Signer;
-
-use crate::sol::{create_new_account, load_all_accounts, transfer_lamports};
-use crate::spl::{
-    get_associated_token_account, get_token_balance, get_token_mint_accounts, transfer_tokens,
+use solana_sdk::{
+    pubkey::Pubkey,
+    signer::{keypair::read_keypair_file, Signer},
 };
-use crate::utils::{connect, connect_thin_client, Config};
+
+use crate::{
+    sol::{create_new_account, load_all_accounts, transfer_lamports},
+    spl::{
+        get_associated_token_account, get_token_balance, get_token_mint_accounts, transfer_tokens,
+    },
+    utils::{connect, Config},
+};
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 struct Balances {
@@ -82,7 +81,7 @@ pub async fn create(config: web::Data<Arc<Config>>) -> impl Responder {
         let client = connect(&config.json_rpc_url);
         create_new_account(&client, &config.payer);
     });
-    h.join();
+    h.join().unwrap();
 
     HttpResponse::Ok()
 }
@@ -104,7 +103,7 @@ pub async fn transfer(config: web::Data<Arc<Config>>, info: web::Json<Info>) -> 
         let source = read_keypair_file(format!("./keys/{}.json", info.from_pubkey)).unwrap();
         transfer_lamports(&client, &source, &dest, info.amount);
     });
-    h.join();
+    h.join().unwrap();
 
     HttpResponse::Ok()
 }
@@ -131,7 +130,7 @@ pub async fn transfer_spl_tokens(
         let source = read_keypair_file(format!("./keys/{}.json", info.from_pubkey)).unwrap();
         transfer_tokens(&client, &token_mint, &source, &dest, info.amount);
     });
-    h.join();
+    h.join().unwrap();
 
     HttpResponse::Ok()
 }

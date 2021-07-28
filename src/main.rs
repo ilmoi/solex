@@ -1,7 +1,6 @@
-use solex::utils::{load_config, connect};
-use solex::sol::load_all_accounts;
-use solex::web::server::run_server;
 use std::sync::Arc;
+
+use solex::{utils::load_config, web::server::run_server};
 
 #[actix_web::main]
 async fn main() {
@@ -11,6 +10,8 @@ async fn main() {
     let arc_config = Arc::new(config);
 
     println!("listening on 5000");
-    run_server("localhost:5000", arc_config).unwrap().await;
+    run_server("localhost:5000", arc_config)
+        .unwrap()
+        .await
+        .unwrap();
 }
-

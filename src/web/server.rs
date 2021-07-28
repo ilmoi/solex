@@ -1,11 +1,12 @@
 use std::sync::Arc;
 
 use actix_cors::Cors;
-use actix_web::dev::Server;
-use actix_web::{http, web, App, HttpServer};
+use actix_web::{dev::Server, http, web, App, HttpServer};
 
-use crate::utils::Config;
-use crate::web::routes::{accounts, create, health, transfer, transfer_spl_tokens};
+use crate::{
+    utils::Config,
+    web::routes::{accounts, create, health, transfer, transfer_spl_tokens},
+};
 
 pub fn run_server(addr: &str, config: Arc<Config>) -> Result<Server, std::io::Error> {
     let config = web::Data::new(config);

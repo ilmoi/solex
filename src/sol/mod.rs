@@ -1,17 +1,17 @@
+use std::{fs, fs::File};
+
 use solana_client::rpc_client::RpcClient;
-use solana_client::thin_client::ThinClient;
-use solana_sdk::client::{AsyncClient, SyncClient};
-use solana_sdk::commitment_config::CommitmentConfig;
-use solana_sdk::pubkey::Pubkey;
-use solana_sdk::signer::keypair::{read_keypair_file, Keypair};
-use solana_sdk::signer::Signer;
-use solana_sdk::system_instruction::create_account;
-use solana_sdk::system_program;
-use solana_sdk::system_transaction::transfer;
-use solana_sdk::transaction::Transaction;
-use std::fs;
-use std::fs::File;
-use std::io::Write;
+use solana_sdk::{
+    pubkey::Pubkey,
+    signer::{
+        keypair::{read_keypair_file, Keypair},
+        Signer,
+    },
+    system_instruction::create_account,
+    system_program,
+    system_transaction::transfer,
+    transaction::Transaction,
+};
 
 pub fn create_new_account(client: &RpcClient, payer: &Keypair) -> Keypair {
     let new_keypair = solana_sdk::signature::Keypair::new();
@@ -48,7 +48,7 @@ pub fn create_new_account(client: &RpcClient, payer: &Keypair) -> Keypair {
 }
 
 pub fn store_keypair(kp: &Keypair) {
-    let mut file = File::create(format!("keys/{}.json", kp.pubkey())).unwrap();
+    let file = File::create(format!("keys/{}.json", kp.pubkey())).unwrap();
     serde_json::to_writer(&file, &kp.to_bytes()[..]).unwrap();
 }
 
