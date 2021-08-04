@@ -22,6 +22,9 @@ solana-cli-config = "1.7.8"
 solana-client = "1.7.8"
 solana-logger = "1.7.8"
 solana-sdk = "1.7.8"
+solana-transaction-status = "1.7.8"
+spl-associated-token-account = "1.0.3"
+spl-token = "3.2.0"
 
 # ------------------------------------------------------------------------------ OTHER
 serde = { version = "1.0.126", features = ["derive"] }
@@ -32,5 +35,19 @@ uuid = { version = "0.8.1", features = ["v4", "serde"] }
 reqwest = { version = "0.11.3", features = ["json"] }
 thiserror = "1.0.25"
 anyhow = "1.0.41"
-spl-associated-token-account = "1.0.3"
-spl-token = "3.2.0"
+clokwerk = "0.4.0-rc1"
+
+# --------------------------------------------------------------------------------- SQLX
+[dependencies.sqlx]
+version = "0.5.1"
+default-features = false
+features = [
+    "runtime-actix-rustls",
+    "macros",
+    "postgres",
+    "uuid",
+    "chrono",
+    "migrate",
+    "json",
+    "offline",
+]

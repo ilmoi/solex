@@ -37,7 +37,6 @@ pub async fn health(config: web::Data<Arc<Config>>) -> impl Responder {
 
 #[get("/accounts")]
 pub async fn accounts(config: web::Data<Arc<Config>>) -> impl Responder {
-    //todo asked for a better solution in discord
     let h = thread::spawn(move || {
         let config = config.as_ref().deref();
         let client = connect(&config.json_rpc_url);
@@ -75,7 +74,6 @@ pub async fn accounts(config: web::Data<Arc<Config>>) -> impl Responder {
 
 #[get("/create")]
 pub async fn create(config: web::Data<Arc<Config>>) -> impl Responder {
-    //todo asked for a better solution in discord
     let h = thread::spawn(move || {
         let config = config.as_ref().deref();
         let client = connect(&config.json_rpc_url);
@@ -95,7 +93,6 @@ pub struct Info {
 
 #[post("/transfer")]
 pub async fn transfer(config: web::Data<Arc<Config>>, info: web::Json<Info>) -> impl Responder {
-    //todo asked for a better solution in discord
     let h = thread::spawn(move || {
         let config = config.as_ref().deref();
         let client = connect(&config.json_rpc_url);
@@ -121,7 +118,6 @@ pub async fn transfer_spl_tokens(
     config: web::Data<Arc<Config>>,
     info: web::Json<TokenInfo>,
 ) -> impl Responder {
-    //todo asked for a better solution in discord
     let h = thread::spawn(move || {
         let config = config.as_ref().deref();
         let client = connect(&config.json_rpc_url);

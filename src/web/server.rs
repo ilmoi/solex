@@ -7,9 +7,15 @@ use crate::{
     utils::Config,
     web::routes::{accounts, create, health, transfer, transfer_spl_tokens},
 };
+use sqlx::{Pool, Postgres};
 
-pub fn run_server(addr: &str, config: Arc<Config>) -> Result<Server, std::io::Error> {
+pub fn run_server(
+    addr: &str,
+    config: Arc<Config>,
+    // pg_pool: Arc<Pool<Postgres>>,
+) -> Result<Server, std::io::Error> {
     let config = web::Data::new(config);
+    // let pool = web::Data::new(pg_pool);
 
     let server = HttpServer::new(move || {
         let cors = Cors::default()
@@ -27,6 +33,7 @@ pub fn run_server(addr: &str, config: Arc<Config>) -> Result<Server, std::io::Er
             .service(transfer)
             .service(transfer_spl_tokens)
             .app_data(config.clone())
+        // .app_data(pool.clone())
     })
     .bind(addr)?
     .run();

@@ -33,6 +33,7 @@ pub fn create_new_account(client: &RpcClient, payer: &Keypair) -> Keypair {
         client.get_recent_blockhash().unwrap().0,
     );
 
+    //todo figure out sync / async tx
     // let tx_hash = client.async_send_transaction(tx).unwrap(); //async
     let tx_hash = client.send_and_confirm_transaction(&tx).unwrap(); //sync
     println!(
